@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva apertura de cuenta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .sol-page { max-width: 860px; margin: 0 auto; }
+        .sol-hero {
+            background: linear-gradient(135deg, #eaf2ff, #dbeafe);
+            border-left: 6px solid #2563eb;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 26px rgba(37, 99, 235, 0.10);
+            margin-bottom: 22px;
+        }
+        .sol-hero h1 { margin: 0 0 10px; font-size: 2rem; color: #0f172a; }
+        .sol-hero p { margin: 0; color: #475569; line-height: 1.6; font-size: 1rem; }
+        .sol-note {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 22px 24px;
+            margin-bottom: 22px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+        }
+        .sol-note h3 { margin: 0 0 8px; color: #0f172a; font-size: 1.15rem; }
+        .sol-note p { margin: 0; color: #64748b; line-height: 1.6; }
+        .sol-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+        }
+        .sol-card h3 { margin: 0 0 22px; color: #0f172a; font-size: 1.35rem; }
+        .sol-form { display: flex; flex-direction: column; gap: 20px; }
+        .sol-field { display: flex; flex-direction: column; }
+        .sol-field label {
+            font-size: 0.96rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .sol-field input, .sol-field select {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            padding: 14px 15px;
+            font-size: 1rem;
+            background: #f8fafc;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .sol-field input:focus, .sol-field select:focus {
+            background: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        }
+        .sol-help {
+            margin-top: 8px;
+            font-size: 0.92rem;
+            color: #64748b;
+            line-height: 1.45;
+        }
+        .sol-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .sol-btn-primary {
+            border: none;
+            background: linear-gradient(90deg, #1d4ed8, #2563eb);
+            color: #ffffff;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            min-width: 220px;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18);
+        }
+        .sol-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background: #e2e8f0;
+            color: #0f172a;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            min-width: 220px;
+        }
+        @media (max-width: 768px) {
+            .sol-hero, .sol-note, .sol-card { padding: 22px 18px; }
+            .sol-hero h1 { font-size: 1.65rem; }
+            .sol-actions { flex-direction: column; }
+            .sol-btn-primary, .sol-btn-secondary { width: 100%; min-width: unset; }
+        }
+    </style>
+</head>
+<body>
+    <header class="barra">
+        <div class="marca">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo-barra">
+            <div>
+                <h2>Banco de Vivienda</h2>
+                <p>Gestión de solicitudes</p>
+            </div>
+        </div>
+
+        <div class="usuario-barra">
+            <span class="etiqueta-usuario">{{ session['nombreusuario'] }}</span>
+            <a href="/colaborador" class="btn-salir">Volver</a>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <div class="sol-page">
+            <section class="sol-hero">
+                <h1>Nueva apertura de cuenta</h1>
+                <p>Registra una solicitud para que un cliente pueda aperturar una nueva cuenta bancaria. El sistema almacenará la solicitud con la fecha actual y estado pendiente.</p>
+            </section>
+
+            <section class="sol-note">
+                <h3>Selección de cliente</h3>
+                <p>Escribe el nombre del cliente y selecciona una opción sugerida. El sistema tomará automáticamente el identificador correcto.</p>
+            </section>
+
+            <section class="sol-card">
+                <h3>Formulario de solicitud</h3>
+
+                <form method="POST" class="sol-form" onsubmit="return prepararClienteSeleccionado();">
+                    <div class="sol-field">
+                        <label for="cliente_busqueda">Cliente</label>
+                        <div class="cliente-selector">
+                            <input list="lista_clientes" id="cliente_busqueda" placeholder="Nombre" autocomplete="off" required>
+                            <datalist id="lista_clientes">
+                                {% for c in clientes %}
+                                <option value="{{ c[1] }} {{ c[2] }}" data-id="{{ c[0] }}"></option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+
+                        <input type="hidden" id="idcliente" name="idcliente" required>
+                        <span id="cliente_id_preview" class="cliente-id-preview" style="display:none;"></span>
+                        <div id="cliente_alerta" class="sol-alerta" style="display:none;">
+                            Debes seleccionar un cliente válido de la lista sugerida.
+                        </div>
+                        <span class="sol-help">Selecciona el cliente por nombre para evitar errores al registrar la solicitud.</span>
+                    </div>
+
+                    <div class="sol-field">
+                        <label for="tipo">Tipo de cuenta</label>
+                        <select id="tipo" name="tipo" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="Cuenta de Ahorro">Cuenta de Ahorro</option>
+                            <option value="Cuenta Monetaria">Cuenta Monetaria</option>
+                        </select>
+                        <span class="sol-help">Selecciona el producto bancario que el cliente desea aperturar.</span>
+                    </div>
+
+                    <div class="sol-actions">
+                        <button type="submit" class="sol-btn-primary">Guardar solicitud</button>
+                        <a href="/colaborador" class="sol-btn-secondary">Cancelar y volver</a>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const inputCliente = document.getElementById('cliente_busqueda');
+        const hiddenIdCliente = document.getElementById('idcliente');
+        const previewCliente = document.getElementById('cliente_id_preview');
+        const alertaCliente = document.getElementById('cliente_alerta');
+        const opciones = document.querySelectorAll('#lista_clientes option');
+
+        function actualizarClienteSeleccionado() {
+            let encontrado = null;
+
+            opciones.forEach(op => {
+                if (op.value === inputCliente.value) {
+                    encontrado = op.dataset.id;
+                }
+            });
+
+            if (encontrado) {
+                hiddenIdCliente.value = encontrado;
+                previewCliente.style.display = 'inline-block';
+                previewCliente.textContent = 'ID seleccionado: ' + encontrado;
+                alertaCliente.style.display = 'none';
+            } else {
+                hiddenIdCliente.value = '';
+                previewCliente.style.display = 'none';
+            }
+        }
+
+        function prepararClienteSeleccionado() {
+            actualizarClienteSeleccionado();
+
+            if (!hiddenIdCliente.value) {
+                alertaCliente.style.display = 'block';
+                return false;
+            }
+
+            return true;
+        }
+
+        inputCliente.addEventListener('input', actualizarClienteSeleccionado);
+        inputCliente.addEventListener('change', actualizarClienteSeleccionado);
+    </script>
+</body>
+</html>

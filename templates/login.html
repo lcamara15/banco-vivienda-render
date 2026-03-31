@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Banco de Vivienda - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="fondo-login">
+    <div class="login-container">
+        <div class="card-login">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Banco de Vivienda" class="logo-login">
+            <h1>Banco de Vivienda</h1>
+            <p class="subtitulo">Acceso seguro para clientes y colaboradores</p>
+
+            {% if error %}
+                <div class="alerta">{{ error }}</div>
+            {% endif %}
+
+            <form action="/login" method="POST">
+                <label>Usuario</label>
+                <input type="text" name="nombreUsuario" placeholder="Ingrese su usuario" required>
+
+                <label>Contraseña</label>
+                <input type="password" name="contrasena" placeholder="Ingrese su contraseña" required>
+
+                <button type="submit">Ingresar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

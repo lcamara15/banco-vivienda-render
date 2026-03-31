@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Colaborador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header class="barra">
+        <div class="marca">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo-barra">
+            <div>
+                <h2>Banco de Vivienda</h2>
+                <p>Portal de colaborador</p>
+            </div>
+        </div>
+
+        <div class="usuario-barra">
+            <span class="etiqueta-usuario">{{ nombreusuario }}</span>
+            <a href="/logout" class="btn-salir">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <section class="bienvenida">
+            <h1>Panel de colaborador</h1>
+            <p>Consulta información de clientes, pagos por vencer y movimientos relevantes del sistema.</p>
+        </section>
+
+        <section class="resumen-grid">
+            <div class="card-resumen">
+                <h4>Pagos por revisar</h4>
+                <div class="valor">{{ pagos_por_vencer|length }}</div>
+                <div class="detalle">Registros pendientes o por vencer</div>
+            </div>
+            <div class="card-resumen">
+                <h4>Usuario activo</h4>
+                <div class="valor">{{ nombreusuario }}</div>
+                <div class="detalle">Colaborador autenticado</div>
+            </div>
+        </section>
+
+        <div class="acciones">
+            <a href="/buscar_cliente" class="boton-accion">Buscar cliente</a>
+            <a href="/nueva_solicitud_credito" class="boton-accion">Nueva solicitud de crédito</a>
+            <a href="/nueva_solicitud_cuenta" class="boton-accion">Nueva apertura de cuenta</a>
+      </div>
+
+        <section class="seccion">
+            <h3>Pagos por vencer</h3>
+            {% if pagos_por_vencer %}
+            <table>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Tipo obligación</th>
+                    <th>Fecha vencimiento</th>
+                    <th>Monto</th>
+                    <th>Estado</th>
+                </tr>
+                {% for p in pagos_por_vencer %}
+                <tr>
+                    <td>{{ p[0] }} {{ p[1] }}</td>
+                    <td>{{ p[2] }}</td>
+                    <td>{{ p[3] }}</td>
+                    <td>Q {{ p[4] }}</td>
+                    <td>
+                        {% set estado = p[5]|lower %}
+                        {% if 'vencer' in estado %}
+                            <span class="badge badge-vencer">{{ p[5] }}</span>
+                        {% else %}
+                            <span class="badge badge-pendiente">{{ p[5] }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p class="vacio">No hay pagos pendientes por mostrar.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

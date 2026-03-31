@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header class="barra">
+        <div class="marca">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo-barra">
+            <div>
+                <h2>Banco de Vivienda</h2>
+                <p>Portal de cliente</p>
+            </div>
+        </div>
+
+        <div class="usuario-barra">
+            <span class="etiqueta-usuario">{{ nombre_completo }}</span>
+            <a href="/logout" class="btn-salir">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <section class="bienvenida">
+            <h1>Bienvenido, {{ nombre_completo }}</h1>
+            <p>Aquí puedes consultar tus cuentas, obligaciones, pagos y solicitudes registradas.</p>
+        </section>
+
+        <section class="resumen-grid">
+            <div class="card-resumen">
+                <h4>Cuentas registradas</h4>
+                <div class="valor">{{ cuentas|length }}</div>
+                <div class="detalle">Productos activos en tu perfil</div>
+            </div>
+            <div class="card-resumen">
+                <h4>Obligaciones</h4>
+                <div class="valor">{{ obligaciones|length }}</div>
+                <div class="detalle">Préstamos y tarjetas asociados</div>
+            </div>
+            <div class="card-resumen">
+                <h4>Pagos registrados</h4>
+                <div class="valor">{{ pagos|length }}</div>
+                <div class="detalle">Historial y próximos vencimientos</div>
+            </div>
+            <div class="card-resumen">
+                <h4>Solicitudes</h4>
+                <div class="valor">{{ solicitudes_cuenta|length + solicitudes_credito|length }}</div>
+                <div class="detalle">Cuentas y créditos solicitados</div>
+            </div>
+        </section>
+
+        <section class="seccion">
+            <h3>Mis cuentas</h3>
+            {% if cuentas %}
+            <table>
+                <tr>
+                    <th>Número</th>
+                    <th>Tipo</th>
+                    <th>Saldo</th>
+                    <th>Estado</th>
+                    <th>Fecha apertura</th>
+                </tr>
+                {% for c in cuentas %}
+                <tr>
+                    <td>{{ c[0] }}</td>
+                    <td>{{ c[1] }}</td>
+                    <td>Q {{ c[2] }}</td>
+                    <td>
+                        <span class="badge badge-activa">{{ c[3] }}</span>
+                    </td>
+                    <td>{{ c[4] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p class="vacio">No hay cuentas registradas.</p>
+            {% endif %}
+        </section>
+
+        <section class="seccion">
+            <h3>Mis obligaciones o préstamos</h3>
+            {% if obligaciones %}
+            <table>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Monto original</th>
+                    <th>Saldo pendiente</th>
+                    <th>Inicio</th>
+                    <th>Vencimiento</th>
+                    <th>Estado</th>
+                </tr>
+                {% for o in obligaciones %}
+                <tr>
+                    <td>{{ o[0] }}</td>
+                    <td>{{ o[1] }}</td>
+                    <td>Q {{ o[2] }}</td>
+                    <td>Q {{ o[3] }}</td>
+                    <td>{{ o[4] }}</td>
+                    <td>{{ o[5] }}</td>
+                    <td><span class="badge badge-activa">{{ o[6] }}</span></td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p class="vacio">No hay obligaciones registradas.</p>
+            {% endif %}
+        </section>
+
+        <section class="seccion">
+            <h3>Mis pagos</h3>
+            {% if pagos %}
+            <table>
+                <tr>
+                    <th>Fecha pago</th>
+                    <th>Fecha vencimiento</th>
+                    <th>Monto</th>
+                    <th>Estado</th>
+                    <th>Obligación</th>
+                </tr>
+                {% for p in pagos %}
+                <tr>
+                    <td>{{ p[0] if p[0] else 'No pagado aún' }}</td>
+                    <td>{{ p[1] }}</td>
+                    <td>Q {{ p[2] }}</td>
+                    <td>
+                        {% set estado = p[3]|lower %}
+                        {% if 'pagado' in estado %}
+                            <span class="badge badge-pagado">{{ p[3] }}</span>
+                        {% elif 'vencer' in estado %}
+                            <span class="badge badge-vencer">{{ p[3] }}</span>
+                        {% else %}
+                            <span class="badge badge-pendiente">{{ p[3] }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ p[4] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p class="vacio">No hay pagos registrados.</p>
+            {% endif %}
+        </section>
+
+        <section class="seccion">
+            <h3>Solicitudes de cuenta</h3>
+            {% if solicitudes_cuenta %}
+            <table>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tipo cuenta</th>
+                    <th>Estado</th>
+                </tr>
+                {% for s in solicitudes_cuenta %}
+                <tr>
+                    <td>{{ s[0] }}</td>
+                    <td>{{ s[1] }}</td>
+                    <td>
+                        {% set estado = s[2]|lower %}
+                        {% if 'aprob' in estado %}
+                            <span class="badge badge-aprobada">{{ s[2] }}</span>
+                        {% else %}
+                            <span class="badge badge-pendiente">{{ s[2] }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p class="vacio">No hay solicitudes de cuenta registradas.</p>
+            {% endif %}
+        </section>
+
+        <section class="seccion">
+            <h3>Solicitudes de crédito</h3>
+            {% if solicitudes_credito %}
+            <table>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Plazo</th>
+                    <th>Estado</th>
+                </tr>
+                {% for s in solicitudes_credito %}
+                <tr>
+                    <td>{{ s[0] }}</td>
+                    <td>Q {{ s[1] }}</td>
+                    <td>{{ s[2] }} meses</td>
+                    <td>
+                        {% set estado = s[3]|lower %}
+                        {% if 'aprob' in estado %}
+                            <span class="badge badge-aprobada">{{ s[3] }}</span>
+                        {% elif 'revisi' in estado %}
+                            <span class="badge badge-revision">{{ s[3] }}</span>
+                        {% else %}
+                            <span class="badge badge-pendiente">{{ s[3] }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p class="vacio">No hay solicitudes de crédito registradas.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

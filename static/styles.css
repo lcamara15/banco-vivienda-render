@@ -1,0 +1,570 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f3f6fb;
+    color: #1f2937;
+}
+
+.fondo-login {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #000000 55%, #2563eb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 430px;
+}
+
+.card-login {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 22px;
+    padding: 38px 34px;
+    box-shadow: 0 20px 50px rgba(20, 71, 190, 0.28);
+    text-align: center;
+}
+
+.logo-login {
+    width: 250px;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.card-login h1 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 2rem;
+}
+
+.subtitulo {
+    margin: 10px 0 28px;
+    color: #64748b;
+    font-size: 0.98rem;
+}
+
+.card-login form {
+    text-align: left;
+}
+
+.card-login label {
+    display: block;
+    margin-bottom: 8px;
+    margin-top: 16px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.card-login input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    outline: none;
+    font-size: 0.98rem;
+    transition: 0.2s ease;
+    background: #f8fafc;
+}
+
+.card-login input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.card-login button,
+.busqueda-form button,
+.boton-accion {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 16px;
+    margin-top: 22px;
+    background: linear-gradient(90deg, #1d4ed8, #2563eb);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.card-login button:hover,
+.busqueda-form button:hover,
+.boton-accion:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+}
+
+.alerta {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.barra {
+    background: linear-gradient(90deg, #0f172a, #000000);
+    color: white;
+    padding: 16px 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+    gap: 20px;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-barra {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    background: rgb(253, 253, 253);
+    padding: 6px;
+    border-radius: 12px;
+}
+
+.marca h2 {
+    margin: 0;
+    font-size: 1.35rem;
+}
+
+.marca p {
+    margin: 2px 0 0;
+    font-size: 0.88rem;
+    color: #cbd5e1;
+}
+
+.usuario-barra {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.etiqueta-usuario {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    color: #ffffff;       
+    font-weight: 700;     
+}
+
+.btn-salir {
+    color: white;
+    text-decoration: none;
+    background: #dc2626;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.btn-salir:hover {
+    background: #b91c1c;
+}
+
+.contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 22px 50px;
+}
+
+.bienvenida {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-left: 6px solid #2563eb;
+    padding: 24px;
+    border-radius: 18px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.08);
+}
+
+.bienvenida h1 {
+    margin: 0 0 8px;
+    color: #0f172a;
+    font-size: 1.9rem;
+}
+
+.bienvenida p {
+    margin: 0;
+    color: #475569;
+}
+
+.resumen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.card-resumen {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e5e7eb;
+}
+
+.card-resumen h4 {
+    margin: 0 0 8px;
+    color: #64748b;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.card-resumen .valor {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.card-resumen .detalle {
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 0.92rem;
+}
+
+.seccion {
+    background: white;
+    padding: 22px;
+    margin-top: 22px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.07);
+    border: 1px solid #e5e7eb;
+}
+
+.seccion h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #0f172a;
+    font-size: 1.2rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+table th,
+table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    font-size: 0.96rem;
+}
+
+table th {
+    background: #eff6ff;
+    color: #000000;
+    font-weight: 700;
+}
+
+table tr:hover td {
+    background: #f8fafc;
+}
+
+.acciones {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.boton-accion {
+    width: auto;
+    min-width: 200px;
+    margin-top: 0;
+}
+
+.busqueda-form {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0 0;
+    flex-wrap: wrap;
+}
+
+.busqueda-form input {
+    flex: 1;
+    min-width: 220px;
+    padding: 13px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: #fff;
+    outline: none;
+}
+
+.busqueda-form button {
+    width: auto;
+    min-width: 140px;
+    margin-top: 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.badge-activa,
+.badge-aprobada,
+.badge-pagado {
+    background: #dcfce7;
+    color: #0e853b;
+}
+
+.badge-pendiente,
+.badge-revision {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-vencer {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.vacio {
+    color: #64748b;
+    font-style: italic;
+    margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+    .barra {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .usuario-barra {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .contenedor {
+        padding: 22px 14px 40px;
+    }
+
+    .card-login {
+        padding: 30px 22px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+.solicitud-wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.solicitud-hero {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-left: 6px solid #2563eb;
+    border-radius: 22px;
+    padding: 28px 30px;
+    margin-bottom: 22px;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.08);
+}
+
+.solicitud-hero h1 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+    color: #0f172a;
+}
+
+.solicitud-hero p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.solicitud-info {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 20px 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
+.solicitud-info h3 {
+    margin: 0 0 8px;
+    color: #0f172a;
+    font-size: 1.15rem;
+}
+
+.solicitud-info p {
+    margin: 0;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.solicitud-card {
+    background: #ffffff;
+    border-radius: 220px;
+    padding: 28px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e5e7eb;
+}
+
+.solicitud-card h3 {
+    margin: 0 0 22px;
+    color: #0f172a;
+    font-size: 1.4rem;
+}
+
+.solicitud-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.solicitud-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.solicitud-field label {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 0.97rem;
+}
+
+.solicitud-field input,
+.solicitud-field select {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    background: #f8fafc;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.2s ease;
+    min-height: 50px;
+}
+
+.solicitud-field input:focus,
+.solicitud-field select:focus {
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.solicitud-help {
+    color: #64748b;
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
+.solicitud-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.solicitud-actions .boton-accion,
+.solicitud-actions .boton-secundario {
+    min-width: 220px;
+    margin-top: 0;
+}
+
+.usuario-barra .boton-secundario {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.usuario-barra .boton-secundario:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+@media (max-width: 768px) {
+    .solicitud-hero,
+    .solicitud-info,
+    .solicitud-card {
+        padding: 22px 18px;
+    }
+
+    .solicitud-hero h1 {
+        font-size: 1.65rem;
+    }
+
+    .solicitud-actions {
+        flex-direction: column;
+    }
+
+    .solicitud-actions .boton-accion,
+    .solicitud-actions .boton-secundario {
+        width: 100%;
+        min-width: unset;
+    }
+}
+.cliente-selector {
+    position: relative;
+}
+
+.cliente-selector input {
+    width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    padding: 14px 15px;
+    font-size: 1rem;
+    background: #f8fafc;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.cliente-selector input:focus {
+    background: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.cliente-id-preview {
+    margin-top: 8px;
+    display: inline-block;
+    font-size: 0.92rem;
+    color: #1e3a8a;
+    background: #eff6ff;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.sol-alerta {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.94rem;
+    line-height: 1.45;
+}
+}

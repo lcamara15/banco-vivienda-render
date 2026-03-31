@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header class="barra">
+        <div class="marca">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo-barra">
+            <div>
+                <h2>Banco de Vivienda</h2>
+                <p>Búsqueda de clientes</p>
+            </div>
+        </div>
+
+        <div class="usuario-barra">
+            <a href="/colaborador" class="btn-salir">Volver</a>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <section class="bienvenida">
+            <h1>Búsqueda de cliente</h1>
+            <p>Busca por nombre o apellido para consultar cuentas y obligaciones registradas.</p>
+        </section>
+
+        <section class="seccion">
+            <form method="POST" class="busqueda-form">
+                <input type="text" name="texto_busqueda" placeholder="Ingrese nombre o apellido" required>
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+
+        {% if resultado_cliente %}
+            <section class="seccion">
+                <h3>Cliente encontrado</h3>
+                <p><strong>Nombre:</strong> {{ resultado_cliente[1] }} {{ resultado_cliente[2] }}</p>
+                <p><strong>ID Cliente:</strong> {{ resultado_cliente[0] }}</p>
+            </section>
+
+            <section class="seccion">
+                <h3>Cuentas</h3>
+                {% if cuentas %}
+                <table>
+                    <tr>
+                        <th>Número</th>
+                        <th>Tipo</th>
+                        <th>Saldo</th>
+                        <th>Estado</th>
+                    </tr>
+                    {% for c in cuentas %}
+                    <tr>
+                        <td>{{ c[0] }}</td>
+                        <td>{{ c[1] }}</td>
+                        <td>Q {{ c[2] }}</td>
+                        <td><span class="badge badge-activa">{{ c[3] }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <p class="vacio">El cliente no tiene cuentas registradas.</p>
+                {% endif %}
+            </section>
+
+            <section class="seccion">
+                <h3>Obligaciones</h3>
+                {% if obligaciones %}
+                <table>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Saldo pendiente</th>
+                        <th>Estado</th>
+                    </tr>
+                    {% for o in obligaciones %}
+                    <tr>
+                        <td>{{ o[0] }}</td>
+                        <td>{{ o[1] }}</td>
+                        <td>Q {{ o[2] }}</td>
+                        <td><span class="badge badge-activa">{{ o[3] }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <p class="vacio">El cliente no tiene obligaciones registradas.</p>
+                {% endif %}
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>
